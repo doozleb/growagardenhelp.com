@@ -31,4 +31,4 @@ More information and features will be added as the project develops. Stay tuned 
 
 ## Disclaimer
 
-This is an unofficial fan-made website and is not affiliated with Roblox or the original game developers. All game-related content and assets belong to their respective owners. 
+This is an unofficial fan-made website and is not affiliated with Roblox or the original game developers. All game-related content and assets belong to their respective owners.
