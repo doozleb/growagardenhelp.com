@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow A Garden Help - Values</title>
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+            <a href="index.html" class="logo">Grow A Garden Help</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="strategies.html">Strategies</a></li>
+                <li><a href="values.html">Values</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="doc-main animate-fade-in">
+        <section class="doc-section content-box animate-slide-up">
+            <h1>Values</h1>
+            <p>This page provides detailed information on crop mutation values in Grow a Garden, including how each mutation is obtained and how their multipliers affect your crop rewards. Use this as a reference to understand the impact of each mutation and how values are calculated in the game.</p>
+            <h3 class="green-subheading">Calculation of Sheckles Value</h3>
+            <p class="formula">Total Value = Base Value × Growth Mutation × (1 + Total Mutation − Number of Environmental Mutations)</p>
+            <ul class="formula-definitions">
+                <li><strong>Base value:</strong> Value without any mutations</li>
+                <li><strong>Growth mutation:</strong> Gold (20) or Rainbow (50) or none (1)</li>
+                <li><strong>Total mutation:</strong> Sum of all multipliers (add them all up)</li>
+                <li><strong>Number of environmental mutations:</strong> How many mutations NOT INCLUDING Gold or Rainbow</li>
+            </ul>
+        </section>
+        <section class="doc-section content-box animate-slide-up">
+            <h2>Base Values</h2>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="fruitSearch" placeholder="Search fruits..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+            </div>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Plant</th>
+                            <th>Base Value</th>
+                            <th>Multi-Harvest</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fruitTableBody">
+                        <tr><td>Carrot</td><td>18</td><td>✗</td></tr>
+                        <tr><td>Strawberry</td><td>14</td><td>✓</td></tr>
+                        <tr><td>Blueberry</td><td>18</td><td>✓</td></tr>
+                        <tr><td>Orange Tulip</td><td>767</td><td>✗</td></tr>
+                        <tr><td>Tomato</td><td>27</td><td>✓</td></tr>
+                        <tr><td>Corn</td><td>36</td><td>✓</td></tr>
+                        <tr><td>Daffodil</td><td>903</td><td>✗</td></tr>
+                        <tr><td>Watermelon</td><td>2,708</td><td>✗</td></tr>
+                        <tr><td>Pumpkin</td><td>3,700</td><td>✗</td></tr>
+                        <tr><td>Apple</td><td>248</td><td>✓</td></tr>
+                        <tr><td>Bamboo</td><td>3,610</td><td>✗</td></tr>
+                        <tr><td>Coconut</td><td>361</td><td>✓</td></tr>
+                        <tr><td>Cactus</td><td>3,068</td><td>✓</td></tr>
+                        <tr><td>Dragon Fruit</td><td>4,287</td><td>✓</td></tr>
+                        <tr><td>Mango</td><td>5,866</td><td>✓</td></tr>
+                        <tr><td>Grape</td><td>7,085</td><td>✓</td></tr>
+                        <tr><td>Mushroom</td><td>136,278</td><td>✗</td></tr>
+                        <tr><td>Pepper</td><td>7,220</td><td>✓</td></tr>
+                        <tr><td>Cacao</td><td>10,830</td><td>✓</td></tr>
+                        <tr><td>Beanstalk</td><td>25,270</td><td>✓</td></tr>
+                        <tr><td>Ember Lily</td><td>50,000</td><td>✓</td></tr>
+                        <tr><td>Sugar Apple</td><td>TBA</td><td>✓</td></tr>
+                        <tr><td>Pear</td><td>500</td><td>✓</td></tr>
+                        <tr><td>Raspberry</td><td>90</td><td>✓</td></tr>
+                        <tr><td>Pineapple</td><td>1,805</td><td>✓</td></tr>
+                        <tr><td>Peach</td><td>271</td><td>✓</td></tr>
+                        <tr><td>Papaya</td><td>1,000</td><td>✓</td></tr>
+                        <tr><td>Banana</td><td>1,579</td><td>✓</td></tr>
+                        <tr><td>Passionfruit</td><td>3,204</td><td>✓</td></tr>
+                        <tr><td>Soul Fruit</td><td>~3,000</td><td>✓</td></tr>
+                        <tr><td>Cursed Fruit</td><td>~10,000 - 20,000</td><td>✓</td></tr>
+                        <tr><td>Rose</td><td>4,513</td><td>✓</td></tr>
+                        <tr><td>Foxglove</td><td>18,050</td><td>✓</td></tr>
+                        <tr><td>Lilac</td><td>31,588</td><td>✓</td></tr>
+                        <tr><td>Pink Lily</td><td>58,663</td><td>✓</td></tr>
+                        <tr><td>Purple Dahlia</td><td>67,688</td><td>✓</td></tr>
+                        <tr><td>Sunflower</td><td>135,375</td><td>✓</td></tr>
+                        <tr><td>Chocolate Carrot</td><td>9,928</td><td>✗</td></tr>
+                        <tr><td>Red Lollipop</td><td>45,125</td><td>✗</td></tr>
+                        <tr><td>Candy Sunflower</td><td>72,200</td><td>✗</td></tr>
+                        <tr><td>Easter Egg</td><td>2,256</td><td>✓</td></tr>
+                        <tr><td>Candy Blossom</td><td>90,250</td><td>✓</td></tr>
+                        <tr><td>Cranberry</td><td>1,805</td><td>✓</td></tr>
+                        <tr><td>Durian</td><td>4,513</td><td>✓</td></tr>
+                        <tr><td>Eggplant</td><td>6,769</td><td>✓</td></tr>
+                        <tr><td>Venus Fly Trap</td><td>~17,000</td><td>✓</td></tr>
+                        <tr><td>Lotus</td><td>15,343</td><td>✓</td></tr>
+                        <tr><td>Nightshade</td><td>3,159</td><td>✗</td></tr>
+                        <tr><td>Glowshroom</td><td>271</td><td>✓</td></tr>
+                        <tr><td>Mint</td><td>5,415</td><td>✓</td></tr>
+                        <tr><td>Moonflower</td><td>8,574</td><td>✓</td></tr>
+                        <tr><td>Starfruit</td><td>13,538</td><td>✓</td></tr>
+                        <tr><td>Moonglow</td><td>18,050</td><td>✓</td></tr>
+                        <tr><td>Moon Blossom</td><td>50,138</td><td>✓</td></tr>
+                        <tr><td>Blood Banana</td><td>5,415</td><td>✓</td></tr>
+                        <tr><td>Moon Melon</td><td>16,245</td><td>✓</td></tr>
+                        <tr><td>Celestiberry</td><td>9,025</td><td>✓</td></tr>
+                        <tr><td>Moon Mango</td><td>45,125</td><td>✓</td></tr>
+                        <tr><td>Lavender</td><td>22,563</td><td>✗</td></tr>
+                        <tr><td>Nectarshade</td><td>45,125</td><td>✗</td></tr>
+                        <tr><td>Nectarine</td><td>31,588</td><td>✓</td></tr>
+                        <tr><td>Hive Fruit</td><td>45,125</td><td>✓</td></tr>
+                        <tr><td>Manuka Flower</td><td>22,563</td><td>✗</td></tr>
+                        <tr><td>Bee Balm</td><td>15,000</td><td>✓</td></tr>
+                        <tr><td>Dandelion</td><td>45,125</td><td>✗</td></tr>
+                        <tr><td>Nectar Thorn</td><td>40,000</td><td>✓</td></tr>
+                        <tr><td>Lumira</td><td>76,713</td><td>✓</td></tr>
+                        <tr><td>Suncoil</td><td>72,000</td><td>✓</td></tr>
+                        <tr><td>Honeysuckle</td><td>90,250</td><td>✓</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="doc-section content-box animate-slide-up">
+            <h2>Mutations</h2>
+            <div class="mutations-table-wrapper">
+            <table class="mutations-table">
+                <thead>
+                    <tr>
+                        <th>Mutation</th>
+                        <th>Multiplier</th>
+                        <th>How to Obtain</th>
+                        <th>Visual Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Wet</td><td>x2</td><td>During Rain and Thunderstorm, or from a small chance from Sprinklers.</td><td>Plants with this mutation will be dripping with water particles.</td></tr>
+                    <tr><td>Chilled</td><td>x2</td><td>During Frost, or by Polar Bear.</td><td>Plants with this mutation will be slightly bluish with frost particles.</td></tr>
+                    <tr><td>Choc</td><td>x2</td><td>By placing a Chocolate Sprinkler, during Chocolate Rain or placing a Mutation Spray Choc.</td><td>Plants with this mutation will become brown, same color as chocolate.</td></tr>
+                    <tr><td>Moonlit</td><td>x2</td><td>During Night, 6 plants will be moonlit every 2 minutes during the 10 minute period.</td><td>Plant with this mutation will have a purple aroma glowing around them as well as being recolored in purple.</td></tr>
+                    <tr><td>Pollinated</td><td>x3</td><td>During Bee Swarm, or by certain bee pets (Bee, Honey Bee, Petal Bee, Queen Bee, Wasp, Tarantula Hawk)</td><td>Plants with this mutation will be shining and yellow in color, with distinct yellow gas-like particles coming off of them.</td></tr>
+                    <tr><td>Bloodlit</td><td>x4</td><td>During Blood Moon, which only appears during the Blood Moon Event.</td><td>Plants with this mutation will be shining and red in colour.</td></tr>
+                    <tr><td>Burnt</td><td>x4</td><td>Crops have a chance to get Burnt by Cooked Owl.</td><td>Plants with this mutation will have their model to be black, along with a sparking effect at the top when unharvested. When harvested, the sparking effect will be replaced with ash coming from the bottom of the crop.</td></tr>
+                    <tr><td>Plasma</td><td>x5</td><td>During the Laser Storm, which can only be spawned by admins.</td><td>Plants with this mutation will be shining a static, pinkish purple color with red flashing glints.</td></tr>
+                    <tr><td>HoneyGlazed</td><td>x5</td><td>Placing a Honey Sprinkler, or by Bear Bee.</td><td>Plants with this mutation will have a yellow fog surrounding it and will be dripping in yellow liquid.</td></tr>
+                    <tr><td>Heavenly</td><td>x5</td><td>During the Floating Jandel event, which can only be spawned by admins.</td><td>Plants with this mutation will have golden, shining stars of light emitting from the base of the plant.</td></tr>
+                    <tr><td>Frozen</td><td>x10</td><td>If a crop has both Wet and Chilled Mutations or by Polar Bear.</td><td>Plants with this mutation will be encased in an ice block.</td></tr>
+                    <tr><td>Cooked</td><td>x10</td><td>Small chance that Cooked Owl will apply this mutation instead of Burnt.</td><td>Plants with this mutation will have become orange and will have white steam and red swirls emitting from it.</td></tr>
+                    <tr><td>Zombified</td><td>x25</td><td>Crops have a chance to get zombified by the unobtainable Chicken Zombie.</td><td>Plants with this mutation will have a green fog surrounding it and will be dripping in green liquid.</td></tr>
+                    <tr><td>Molten</td><td>x25</td><td>Crops have a chance to get molten by the volcano event.</td><td>Plants with this mutation will have its colors to be orange, yellow and red.</td></tr>
+                    <tr><td>Shocked</td><td>x100</td><td>When crops get struck by lightning from a Thunderstorm or from the Jandel Storm.</td><td>Plants with this mutation will be very neon and glow very brightly, typically it will not have the classic Studded Texture Plants will typically have.</td></tr>
+                    <tr><td>Celestial</td><td>x120</td><td>Crops get star strucked during Meteor Shower.</td><td>Plants with this mutation will be slightly discolored and sparkling yellow and purple.</td></tr>
+                    <tr><td>Disco</td><td>x125</td><td>During Disco, which can only be spawned by admins. Crops also have a chance to become Disco by Disco Bee.</td><td>Plants with this mutation will be shining and flashing colors in the order red, pink, yellow, green, and blue constantly. It looks like rainbow but the colours are instantly changing, not like rainbow, where the colour slowly fades into a different one.</td></tr>
+                    <tr><td>Voidtouched</td><td>x135</td><td>During the Admin-Only Black Hole Event.</td><td>Plants with this mutation will have purple particles resembling black holes around the model.</td></tr>
+                    <tr><td>Dawnbound</td><td>x150</td><td>During the Sun God Event by get 4 players holding 4 Sunflower crops infront of the Sun God touching each other, which can only be spawned by admins or can occur naturally by a very low chance. This mutation can only be applied to the <strong>SUNFLOWER</strong></td><td>Similar to Shocked Mutation, it makes the sunflower yielding the Dawnbound Mutation glow in a neon yellow. After the first time the Sun God event was spawned, Jandel has changed the original neon-white colour of the mutation to the neon-yellow.</td></tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+        <section class="doc-section content-box animate-slide-up">
+            <h2>Growth Mutations</h2>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Mutation</th>
+                            <th>Multiplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Gold</td><td>x20</td></tr>
+                        <tr><td>Rainbow</td><td>x50</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Grow A Garden Help. This is an unofficial fan website.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Mobile menu functionality
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('fruitSearch');
+        const tableBody = document.getElementById('fruitTableBody');
+        const rows = tableBody.getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+
+            for (let row of rows) {
+                const fruitName = row.getElementsByTagName('td')[0].textContent.toLowerCase();
+                if (fruitName.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
