@@ -484,14 +484,13 @@ footer {
 }
 
 .footer-links a {
-    color: #6c757d;
+    color: #888888;
     text-decoration: none;
     margin: 0 0.5rem;
 }
 
-/* Removing the hover effect */
 .footer-links a:hover {
-    color: #6c757d;
+    color: #888888;
     text-decoration: none;
 }
 
