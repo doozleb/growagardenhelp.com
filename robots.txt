@@ -2,6 +2,12 @@ User-agent: *
 Allow: /
 Sitemap: https://growagardenhelp.com/sitemap.xml
 
+# Allow all crawlers
+Allow: /strategies/
+Allow: /values/
+Allow: /privacy
+Allow: /terms
+
 # Disallow admin or private areas if they exist in the future
 Disallow: /admin/
 Disallow: /private/ 
