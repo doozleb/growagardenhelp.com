@@ -523,4 +523,34 @@ footer {
         break-inside: avoid;
         page-break-inside: avoid;
     }
+}
+
+/* FAQ Styles */
+.faq-container {
+    margin-top: 1rem;
+}
+
+.faq-item {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.faq-item h3 {
+    color: #2ecc71;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    text-shadow: 0 0 8px rgba(46,204,113,0.4);
+}
+
+.faq-item p {
+    color: #666;
+    margin: 0;
+    line-height: 1.6;
 } 
