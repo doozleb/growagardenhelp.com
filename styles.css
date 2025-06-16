@@ -440,4 +440,88 @@ footer {
     font-size: 1.08em;
     font-family: 'Poppins', Arial, sans-serif;
     margin-bottom: 1.5rem;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+.breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.breadcrumb li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: "/";
+    margin: 0 0.5rem;
+    color: #6c757d;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Links */
+.footer-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.footer-links a {
+    color: #6c757d;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+/* Removing the hover effect */
+.footer-links a:hover {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+/* Performance Optimization */
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up {
+        animation: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .breadcrumb,
+    .footer-links {
+        display: none;
+    }
+    
+    body {
+        font-size: 12pt;
+    }
+    
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+    
+    .content-box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
 } 
