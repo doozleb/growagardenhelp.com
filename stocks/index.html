@@ -191,6 +191,28 @@
                 </table>
             </div>
         </section>
+
+        <!-- Weather Section -->
+        <section class="doc-section content-box animate-slide-up">
+            <h2>Current Weather Conditions</h2>
+            <p>Real-time weather information that affects mutation chances in your garden. Multiple weather conditions can be active simultaneously.</p>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Weather Condition</th>
+                            <th>Status</th>
+                            <th>Duration</th>
+                            <th>Mutation Effects</th>
+                            <th>Time Remaining</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weatherTableBody">
+                        <tr><td colspan="5" style="text-align: center; padding: 2rem;">Loading weather data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -214,6 +236,10 @@
                 // Fetch stock data
                 const stockResponse = await fetch('https://growagardenapi.vercel.app/api/stock/GetStock');
                 const stockData = await stockResponse.json();
+                
+                // Fetch weather data
+                const weatherResponse = await fetch('https://growagardenapi.vercel.app/api/GetWeather');
+                const weatherData = await weatherResponse.json();
                 
                 // Process and display stock data
                 if (stockData && stockData.Data) {
@@ -255,9 +281,76 @@
                     showError('No stock data available');
                 }
                 
+                // Process and display weather data
+                if (weatherData && weatherData.success && weatherData.weather) {
+                    populateWeatherSection(weatherData.weather);
+                } else {
+                    showWeatherError('No weather data available');
+                }
+                
             } catch (error) {
-                console.error('Error fetching stock data:', error);
+                console.error('Error fetching data:', error);
                 showError('Error loading data. Please try again later.');
+                showWeatherError('Error loading weather data. Please try again later.');
+            }
+        }
+        
+        // Function to populate weather section
+        function populateWeatherSection(weatherArray) {
+            const tableBody = document.getElementById('weatherTableBody');
+            
+            if (!tableBody) return;
+            
+            if (weatherArray && Array.isArray(weatherArray) && weatherArray.length > 0) {
+                tableBody.innerHTML = '';
+                
+                weatherArray.forEach(weather => {
+                    const row = document.createElement('tr');
+                    
+                    // Determine status
+                    const status = weather.active ? 'Active' : 'Inactive';
+                    const statusClass = weather.active ? 'in-stock' : 'out-of-stock';
+                    
+                    // Calculate time remaining
+                    let timeRemaining = 'N/A';
+                    if (weather.active && weather.end_duration_unix) {
+                        const now = Math.floor(Date.now() / 1000);
+                        const remaining = weather.end_duration_unix - now;
+                        if (remaining > 0) {
+                            const minutes = Math.floor(remaining / 60);
+                            const seconds = remaining % 60;
+                            timeRemaining = `${minutes}m ${seconds}s`;
+                        } else {
+                            timeRemaining = 'Ended';
+                        }
+                    }
+                    
+                    // Get weather effects
+                    const effects = getWeatherEffects(weather.weather_name);
+                    
+                    // Format duration
+                    const duration = weather.duration ? `${Math.floor(weather.duration / 60)} minutes` : 'Unknown';
+                    
+                    row.innerHTML = `
+                        <td><strong>${weather.weather_name || 'Unknown Weather'}</strong></td>
+                        <td class="${statusClass}">${status}</td>
+                        <td>${duration}</td>
+                        <td>${effects}</td>
+                        <td>${timeRemaining}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No weather data available</td></tr>';
+            }
+        }
+        
+        // Function to show weather error message
+        function showWeatherError(message) {
+            const tableBody = document.getElementById('weatherTableBody');
+            if (tableBody) {
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #e74c3c;">${message}</td></tr>`;
             }
         }
         
@@ -311,6 +404,29 @@
                     tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 2rem; color: #e74c3c;">${message}</td></tr>`;
                 }
             });
+        }
+        
+        // Helper function to get weather effects
+        function getWeatherEffects(weatherName) {
+            const effects = {
+                'BeeSwarm': 'Increases Pollinated mutation chances',
+                'Frost': 'Increases Chilled mutation chances',
+                'Rain': 'Increases Wet mutation chances',
+                'Thunderstorm': 'Increases Shocked mutation chances',
+                'Night': 'Increases Moonlit mutation chances',
+                'Blood Moon': 'Increases Bloodlit mutation chances',
+                'Meteor Shower': 'Increases Celestial mutation chances',
+                'Disco': 'Increases Disco mutation chances',
+                'Chocolate Rain': 'Increases Choc mutation chances',
+                'Laser Storm': 'Increases Plasma mutation chances',
+                'Floating Jandel': 'Increases Heavenly mutation chances',
+                'Black Hole': 'Increases Voidtouched mutation chances',
+                'Sun God': 'Increases Dawnbound mutation chances (Sunflowers only)',
+                'Volcano': 'Increases Molten mutation chances',
+                'Jandel Storm': 'Increases Shocked mutation chances'
+            };
+            
+            return effects[weatherName] || 'No special effects';
         }
         
         // Search functionality for each section
