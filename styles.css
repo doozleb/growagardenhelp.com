@@ -556,4 +556,15 @@ footer {
     color: #666;
     margin: 0;
     line-height: 1.6;
+}
+
+/* Stock Status Styles */
+.in-stock {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.out-of-stock {
+    color: #e74c3c;
+    font-weight: 600;
 } 

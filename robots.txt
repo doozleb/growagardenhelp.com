@@ -1,6 +1,19 @@
 User-agent: *
 Allow: /
+
+# Sitemap
 Sitemap: https://growagardenhelp.com/sitemap.xml
+
+# Main pages
+Allow: /index.html
+Allow: /strategies/
+Allow: /values/
+Allow: /stocks/
+Allow: /pets/
+
+# Legal pages (noindex)
+Disallow: /privacy.html
+Disallow: /terms.html
 
 # Allow all crawlers
 Allow: /strategies/
