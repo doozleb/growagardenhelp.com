@@ -5,6 +5,7 @@ Sitemap: https://growagardenhelp.com/sitemap.xml
 # Allow all crawlers
 Allow: /strategies/
 Allow: /values/
+Allow: /pets/
 Allow: /privacy
 Allow: /terms
 
