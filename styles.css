@@ -427,6 +427,11 @@ footer {
     background: white;
 }
 
+/* Alternate row coloring for mutations-table */
+.mutations-table tbody tr:nth-child(even) {
+    background-color: #f4fcf7;
+}
+
 .green-subheading {
     color: #2ecc71;
     text-align: center;
