@@ -420,16 +420,14 @@ footer {
 }
 .mutations-table tr:last-child td:first-child {
     border-bottom-left-radius: 10px;
-    background: white;
 }
 .mutations-table tr:last-child td:last-child {
     border-bottom-right-radius: 10px;
-    background: white;
 }
 
 /* Alternate row coloring for mutations-table */
 .mutations-table tbody tr:nth-child(even) {
-    background-color: #f4fcf7;
+    background-color: #f4fcf7 !important;
 }
 
 .green-subheading {
