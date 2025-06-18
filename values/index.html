@@ -203,50 +203,6 @@
             </div>
         </div>
     </footer>
-    <script src="script.js"></script>
-    <script>
-        // Mobile menu functionality
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Search functionality
-        const searchInput = document.getElementById('fruitSearch');
-        const tableBody = document.getElementById('fruitTableBody');
-        const rows = tableBody.getElementsByTagName('tr');
-
-        searchInput.addEventListener('input', function() {
-            const searchText = this.value.toLowerCase();
-
-            for (let row of rows) {
-                const fruitName = row.getElementsByTagName('td')[0].textContent.toLowerCase();
-                if (fruitName.includes(searchText)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            }
-        });
-    </script>
+    <script src="../script.js"></script>
 </body>
 </html> 
