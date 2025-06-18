@@ -132,7 +132,7 @@
                     <thead>
                         <tr>
                             <th>Egg</th>
-                            <th>Stock Status</th>
+                            <th>Stock Quantity</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
@@ -149,7 +149,7 @@
                     <thead>
                         <tr>
                             <th>Honey Item</th>
-                            <th>Stock Status</th>
+                            <th>Stock Quantity</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
@@ -166,7 +166,7 @@
                     <thead>
                         <tr>
                             <th>Cosmetic</th>
-                            <th>Stock Status</th>
+                            <th>Stock Quantity</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
@@ -361,17 +361,9 @@
                     availableItems.forEach(item => {
                         const row = document.createElement('tr');
                         
-                        // Determine stock display based on item type
-                        let stockDisplay = '0';
+                        // Show just the stock number for all shops
                         const stock = parseInt(item.stock) || 0;
-                        
-                        if (itemType === 'Seed' || itemType === 'Gear') {
-                            // For seeds and gear, show just the number
-                            stockDisplay = stock.toString();
-                        } else {
-                            // For other items, show status format
-                            stockDisplay = `In Stock (${stock})`;
-                        }
+                        const stockDisplay = stock.toString();
                         
                         // Format last updated time
                         const lastUpdated = new Date().toLocaleTimeString();
