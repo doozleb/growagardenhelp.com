@@ -93,15 +93,12 @@
             
             <!-- Seeds Section -->
             <h3 class="green-subheading">Seed Shop</h3>
-            <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="seedSearch" placeholder="Search seeds..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
-            </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
                         <tr>
                             <th>Seed</th>
-                            <th>Stock Status</th>
+                            <th>Stock Quantity</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
@@ -113,15 +110,12 @@
 
             <!-- Gear Section -->
             <h3 class="green-subheading">Gear Shop</h3>
-            <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="gearSearch" placeholder="Search gear..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
-            </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
                         <tr>
                             <th>Gear</th>
-                            <th>Stock Status</th>
+                            <th>Stock Quantity</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
@@ -133,9 +127,6 @@
 
             <!-- Eggs Section -->
             <h3 class="green-subheading">Egg Shop</h3>
-            <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="eggSearch" placeholder="Search eggs..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
-            </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
@@ -153,9 +144,6 @@
 
             <!-- Honey Items Section -->
             <h3 class="green-subheading">Honey Shop</h3>
-            <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="honeySearch" placeholder="Search honey items..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
-            </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
@@ -173,9 +161,6 @@
 
             <!-- Cosmetics Section -->
             <h3 class="green-subheading">Cosmetics Shop</h3>
-            <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="cosmeticSearch" placeholder="Search cosmetics..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
-            </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
@@ -194,8 +179,8 @@
 
         <!-- Weather Section -->
         <section class="doc-section content-box animate-slide-up">
-            <h2>Current Weather Conditions</h2>
-            <p>Real-time weather information that affects mutation chances in your garden. Multiple weather conditions can be active simultaneously.</p>
+            <h2>Active Weather Events</h2>
+            <p>Currently active weather conditions that affect mutation chances in your garden. Only active events are shown.</p>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
@@ -301,46 +286,49 @@
             
             if (!tableBody) return;
             
-            if (weatherArray && Array.isArray(weatherArray) && weatherArray.length > 0) {
-                tableBody.innerHTML = '';
+            if (weatherArray && Array.isArray(weatherArray)) {
+                // Filter only active weather events
+                const activeWeather = weatherArray.filter(weather => weather.active === true);
                 
-                weatherArray.forEach(weather => {
-                    const row = document.createElement('tr');
+                if (activeWeather.length > 0) {
+                    tableBody.innerHTML = '';
                     
-                    // Determine status
-                    const status = weather.active ? 'Active' : 'Inactive';
-                    const statusClass = weather.active ? 'in-stock' : 'out-of-stock';
-                    
-                    // Calculate time remaining
-                    let timeRemaining = 'N/A';
-                    if (weather.active && weather.end_duration_unix) {
-                        const now = Math.floor(Date.now() / 1000);
-                        const remaining = weather.end_duration_unix - now;
-                        if (remaining > 0) {
-                            const minutes = Math.floor(remaining / 60);
-                            const seconds = remaining % 60;
-                            timeRemaining = `${minutes}m ${seconds}s`;
-                        } else {
-                            timeRemaining = 'Ended';
+                    activeWeather.forEach(weather => {
+                        const row = document.createElement('tr');
+                        
+                        // Calculate time remaining
+                        let timeRemaining = 'N/A';
+                        if (weather.end_duration_unix) {
+                            const now = Math.floor(Date.now() / 1000);
+                            const remaining = weather.end_duration_unix - now;
+                            if (remaining > 0) {
+                                const minutes = Math.floor(remaining / 60);
+                                const seconds = remaining % 60;
+                                timeRemaining = `${minutes}m ${seconds}s`;
+                            } else {
+                                timeRemaining = 'Ended';
+                            }
                         }
-                    }
-                    
-                    // Get weather effects
-                    const effects = getWeatherEffects(weather.weather_name);
-                    
-                    // Format duration
-                    const duration = weather.duration ? `${Math.floor(weather.duration / 60)} minutes` : 'Unknown';
-                    
-                    row.innerHTML = `
-                        <td><strong>${weather.weather_name || 'Unknown Weather'}</strong></td>
-                        <td class="${statusClass}">${status}</td>
-                        <td>${duration}</td>
-                        <td>${effects}</td>
-                        <td>${timeRemaining}</td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                });
+                        
+                        // Get weather effects
+                        const effects = getWeatherEffects(weather.weather_name);
+                        
+                        // Format duration
+                        const duration = weather.duration ? `${Math.floor(weather.duration / 60)} minutes` : 'Unknown';
+                        
+                        row.innerHTML = `
+                            <td><strong>${weather.weather_name || 'Unknown Weather'}</strong></td>
+                            <td class="in-stock">Active</td>
+                            <td>${duration}</td>
+                            <td>${effects}</td>
+                            <td>${timeRemaining}</td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No active weather events</td></tr>';
+                }
             } else {
                 tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No weather data available</td></tr>';
             }
@@ -361,35 +349,44 @@
             if (!tableBody) return;
             
             if (items && Array.isArray(items) && items.length > 0) {
-                tableBody.innerHTML = '';
-                
-                items.forEach(item => {
-                    const row = document.createElement('tr');
-                    
-                    // Determine stock status
-                    let stockStatus = 'Unknown';
-                    let stockClass = '';
+                // Filter out items with stock = 0
+                const availableItems = items.filter(item => {
                     const stock = parseInt(item.stock) || 0;
-                    
-                    if (stock > 0) {
-                        stockStatus = `In Stock (${stock})`;
-                        stockClass = 'in-stock';
-                    } else {
-                        stockStatus = 'Out of Stock';
-                        stockClass = 'out-of-stock';
-                    }
-                    
-                    // Format last updated time
-                    const lastUpdated = new Date().toLocaleTimeString();
-                    
-                    row.innerHTML = `
-                        <td><strong>${item.name || `Unknown ${itemType}`}</strong></td>
-                        <td class="${stockClass}">${stockStatus}</td>
-                        <td>${lastUpdated}</td>
-                    `;
-                    
-                    tableBody.appendChild(row);
+                    return stock > 0;
                 });
+                
+                if (availableItems.length > 0) {
+                    tableBody.innerHTML = '';
+                    
+                    availableItems.forEach(item => {
+                        const row = document.createElement('tr');
+                        
+                        // Determine stock display based on item type
+                        let stockDisplay = '0';
+                        const stock = parseInt(item.stock) || 0;
+                        
+                        if (itemType === 'Seed' || itemType === 'Gear') {
+                            // For seeds and gear, show just the number
+                            stockDisplay = stock.toString();
+                        } else {
+                            // For other items, show status format
+                            stockDisplay = `In Stock (${stock})`;
+                        }
+                        
+                        // Format last updated time
+                        const lastUpdated = new Date().toLocaleTimeString();
+                        
+                        row.innerHTML = `
+                            <td><strong>${item.name || `Unknown ${itemType}`}</strong></td>
+                            <td class="in-stock">${stockDisplay}</td>
+                            <td>${lastUpdated}</td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 2rem;">No ${itemType.toLowerCase()} currently in stock</td></tr>`;
+                }
             } else {
                 tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 2rem;">No ${itemType.toLowerCase()} data available</td></tr>`;
             }
@@ -429,28 +426,6 @@
             return effects[weatherName] || 'No special effects';
         }
         
-        // Search functionality for each section
-        function setupSearch(searchInputId, tableBodyId) {
-            const searchInput = document.getElementById(searchInputId);
-            const tableBody = document.getElementById(tableBodyId);
-            
-            if (searchInput && tableBody) {
-                searchInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    const rows = tableBody.querySelectorAll('tr');
-                    
-                    rows.forEach(row => {
-                        const text = row.textContent.toLowerCase();
-                        if (text.includes(searchTerm)) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                    });
-                });
-            }
-        }
-        
         // Auto-refresh data every 30 seconds
         function startAutoRefresh() {
             fetchStockData();
@@ -459,13 +434,6 @@
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Setup search functionality for each section
-            setupSearch('seedSearch', 'seedTableBody');
-            setupSearch('gearSearch', 'gearTableBody');
-            setupSearch('eggSearch', 'eggTableBody');
-            setupSearch('honeySearch', 'honeyTableBody');
-            setupSearch('cosmeticSearch', 'cosmeticTableBody');
-            
             // Start auto-refresh
             startAutoRefresh();
         });
