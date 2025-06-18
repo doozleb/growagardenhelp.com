@@ -89,22 +89,104 @@
         </section>
         <section class="doc-section content-box animate-slide-up">
             <h2>Live Stock Updates</h2>
+            <p>Real-time stock information for all shops in Grow A Garden. Data updates automatically every 30 seconds.</p>
+            
+            <!-- Seeds Section -->
+            <h3 class="green-subheading">Seed Shop</h3>
             <div class="search-container" style="margin-bottom: 20px;">
-                <input type="text" id="stockSearch" placeholder="Search items..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+                <input type="text" id="seedSearch" placeholder="Search seeds..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
             </div>
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Current Price</th>
+                            <th>Seed</th>
                             <th>Stock Status</th>
-                            <th>Price Trend</th>
                             <th>Last Updated</th>
                         </tr>
                     </thead>
-                    <tbody id="stockTableBody">
-                        <tr><td colspan="5" style="text-align: center; padding: 2rem;">Loading real-time data...</td></tr>
+                    <tbody id="seedTableBody">
+                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading seed data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Gear Section -->
+            <h3 class="green-subheading">Gear Shop</h3>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="gearSearch" placeholder="Search gear..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+            </div>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Gear</th>
+                            <th>Stock Status</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gearTableBody">
+                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading gear data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Eggs Section -->
+            <h3 class="green-subheading">Egg Shop</h3>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="eggSearch" placeholder="Search eggs..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+            </div>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Egg</th>
+                            <th>Stock Status</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eggTableBody">
+                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading egg data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Honey Items Section -->
+            <h3 class="green-subheading">Honey Shop</h3>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="honeySearch" placeholder="Search honey items..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+            </div>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Honey Item</th>
+                            <th>Stock Status</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="honeyTableBody">
+                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading honey data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cosmetics Section -->
+            <h3 class="green-subheading">Cosmetics Shop</h3>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="cosmeticSearch" placeholder="Search cosmetics..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none;">
+            </div>
+            <div class="mutations-table-wrapper">
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>Cosmetic</th>
+                            <th>Stock Status</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cosmeticTableBody">
+                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading cosmetic data...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -128,179 +210,129 @@
     <script>
         // Real-time stock data fetching
         async function fetchStockData() {
-            const tableBody = document.getElementById('stockTableBody');
-            
             try {
-                // Show loading state
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">Loading real-time data...</td></tr>';
-                
                 // Fetch stock data
                 const stockResponse = await fetch('https://growagardenapi.vercel.app/api/stock/GetStock');
                 const stockData = await stockResponse.json();
                 
-                // Fetch weather data
-                const weatherResponse = await fetch('https://growagardenapi.vercel.app/api/GetWeather');
-                const weatherData = await weatherResponse.json();
-                
-                // Clear loading state
-                tableBody.innerHTML = '';
-                
                 // Process and display stock data
                 if (stockData && stockData.Data) {
                     const data = stockData.Data;
-                    let allItems = [];
                     
-                    // Combine all categories
-                    if (data.seeds && Array.isArray(data.seeds)) {
-                        data.seeds.forEach(item => {
-                            allItems.push({
-                                name: item.name || 'Unknown Seed',
-                                stock: parseInt(item.stock) || 0,
-                                category: 'Seeds'
-                            });
-                        });
-                    }
+                    // Populate Seeds Section
+                    populateSection('seedTableBody', data.seeds, 'Seed');
                     
-                    if (data.gear && Array.isArray(data.gear)) {
-                        data.gear.forEach(item => {
-                            allItems.push({
-                                name: item.name || 'Unknown Gear',
-                                stock: parseInt(item.stock) || 0,
-                                category: 'Gear'
-                            });
-                        });
-                    }
+                    // Populate Gear Section
+                    populateSection('gearTableBody', data.gear, 'Gear');
                     
-                    if (data.egg && Array.isArray(data.egg)) {
-                        data.egg.forEach(item => {
-                            allItems.push({
-                                name: item.name || 'Unknown Egg',
-                                stock: parseInt(item.stock) || 0,
-                                category: 'Eggs'
-                            });
-                        });
-                    }
+                    // Populate Eggs Section
+                    populateSection('eggTableBody', data.egg, 'Egg');
                     
-                    if (data.honey && Array.isArray(data.honey)) {
-                        data.honey.forEach(item => {
-                            allItems.push({
-                                name: item.name || 'Unknown Honey Item',
-                                stock: parseInt(item.stock) || 0,
-                                category: 'Honey Items'
-                            });
-                        });
-                    }
+                    // Populate Honey Items Section
+                    populateSection('honeyTableBody', data.honey, 'Honey Item');
                     
-                    if (data.cosmetics && Array.isArray(data.cosmetics)) {
-                        data.cosmetics.forEach(item => {
-                            allItems.push({
-                                name: item.name || 'Unknown Cosmetic',
-                                stock: parseInt(item.stock) || 0,
-                                category: 'Cosmetics'
-                            });
-                        });
-                    }
-                    
-                    // Display items
-                    if (allItems.length > 0) {
-                        allItems.forEach(item => {
-                            const row = document.createElement('tr');
-                            
-                            // Determine stock status
-                            let stockStatus = 'Unknown';
-                            let stockClass = '';
-                            if (item.stock !== undefined) {
-                                if (item.stock > 0) {
-                                    stockStatus = `In Stock (${item.stock})`;
-                                    stockClass = 'in-stock';
-                                } else {
-                                    stockStatus = 'Out of Stock';
-                                    stockClass = 'out-of-stock';
-                                }
-                            }
-                            
-                            // Format last updated time
-                            const lastUpdated = new Date().toLocaleTimeString();
-                            
-                            row.innerHTML = `
-                                <td><strong>${item.name}</strong><br><small style="color: #666;">${item.category}</small></td>
-                                <td>Price data not available</td>
-                                <td class="${stockClass}">${stockStatus}</td>
-                                <td>Stock data only</td>
-                                <td>${lastUpdated}</td>
-                            `;
-                            
-                            tableBody.appendChild(row);
-                        });
-                    } else {
-                        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No stock data available</td></tr>';
-                    }
+                    // Populate Cosmetics Section
+                    populateSection('cosmeticTableBody', data.cosmetics, 'Cosmetic');
                     
                     // Add last updated timestamp
                     if (data.updatedAt) {
                         const updateTime = new Date(data.updatedAt).toLocaleString();
                         const updateInfo = document.createElement('div');
-                        updateInfo.style.cssText = 'text-align: center; margin-top: 1rem; color: #666; font-size: 0.9rem;';
+                        updateInfo.style.cssText = 'text-align: center; margin-top: 2rem; color: #666; font-size: 0.9rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;';
                         updateInfo.textContent = `Last API Update: ${updateTime}`;
-                        tableBody.parentNode.parentNode.appendChild(updateInfo);
+                        
+                        // Remove existing update info if present
+                        const existingUpdate = document.querySelector('.update-info');
+                        if (existingUpdate) {
+                            existingUpdate.remove();
+                        }
+                        
+                        updateInfo.className = 'update-info';
+                        document.querySelector('.doc-main').appendChild(updateInfo);
                     }
                 } else {
                     // Handle case where data is not in expected format
-                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No stock data available</td></tr>';
-                }
-                
-                // Add weather information section if it doesn't exist
-                if (weatherData && !document.querySelector('.weather-section')) {
-                    const weatherSection = document.createElement('section');
-                    weatherSection.className = 'doc-section content-box animate-slide-up weather-section';
-                    weatherSection.innerHTML = `
-                        <h2>Current Weather</h2>
-                        <div class="mutations-table-wrapper">
-                            <table class="mutations-table">
-                                <thead>
-                                    <tr>
-                                        <th>Weather Condition</th>
-                                        <th>Status</th>
-                                        <th>Effects</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>${weatherData.weather || 'Unknown'}</td>
-                                        <td>Active</td>
-                                        <td>${getWeatherEffects(weatherData.weather)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    `;
-                    
-                    // Insert weather section after the stock table
-                    const stockSection = document.querySelector('.doc-section:nth-child(2)');
-                    stockSection.parentNode.insertBefore(weatherSection, stockSection.nextSibling);
+                    showError('No stock data available');
                 }
                 
             } catch (error) {
                 console.error('Error fetching stock data:', error);
-                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #e74c3c;">Error loading data. Please try again later.</td></tr>';
+                showError('Error loading data. Please try again later.');
             }
         }
         
-        // Helper function to get weather effects
-        function getWeatherEffects(weather) {
-            const effects = {
-                'Rain': 'Increases Wet mutation chances',
-                'Thunderstorm': 'Increases Shocked mutation chances',
-                'Frost': 'Increases Chilled mutation chances',
-                'Night': 'Increases Moonlit mutation chances',
-                'Bee Swarm': 'Increases Pollinated mutation chances',
-                'Blood Moon': 'Increases Bloodlit mutation chances',
-                'Meteor Shower': 'Increases Celestial mutation chances',
-                'Disco': 'Increases Disco mutation chances',
-                'Chocolate Rain': 'Increases Choc mutation chances'
-            };
+        // Function to populate a specific section
+        function populateSection(tableBodyId, items, itemType) {
+            const tableBody = document.getElementById(tableBodyId);
             
-            return effects[weather] || 'No special effects';
+            if (!tableBody) return;
+            
+            if (items && Array.isArray(items) && items.length > 0) {
+                tableBody.innerHTML = '';
+                
+                items.forEach(item => {
+                    const row = document.createElement('tr');
+                    
+                    // Determine stock status
+                    let stockStatus = 'Unknown';
+                    let stockClass = '';
+                    const stock = parseInt(item.stock) || 0;
+                    
+                    if (stock > 0) {
+                        stockStatus = `In Stock (${stock})`;
+                        stockClass = 'in-stock';
+                    } else {
+                        stockStatus = 'Out of Stock';
+                        stockClass = 'out-of-stock';
+                    }
+                    
+                    // Format last updated time
+                    const lastUpdated = new Date().toLocaleTimeString();
+                    
+                    row.innerHTML = `
+                        <td><strong>${item.name || `Unknown ${itemType}`}</strong></td>
+                        <td class="${stockClass}">${stockStatus}</td>
+                        <td>${lastUpdated}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 2rem;">No ${itemType.toLowerCase()} data available</td></tr>`;
+            }
+        }
+        
+        // Function to show error message
+        function showError(message) {
+            const sections = ['seedTableBody', 'gearTableBody', 'eggTableBody', 'honeyTableBody', 'cosmeticTableBody'];
+            sections.forEach(sectionId => {
+                const tableBody = document.getElementById(sectionId);
+                if (tableBody) {
+                    tableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 2rem; color: #e74c3c;">${message}</td></tr>`;
+                }
+            });
+        }
+        
+        // Search functionality for each section
+        function setupSearch(searchInputId, tableBodyId) {
+            const searchInput = document.getElementById(searchInputId);
+            const tableBody = document.getElementById(tableBodyId);
+            
+            if (searchInput && tableBody) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const rows = tableBody.querySelectorAll('tr');
+                    
+                    rows.forEach(row => {
+                        const text = row.textContent.toLowerCase();
+                        if (text.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
         }
         
         // Auto-refresh data every 30 seconds
@@ -311,6 +343,14 @@
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Setup search functionality for each section
+            setupSearch('seedSearch', 'seedTableBody');
+            setupSearch('gearSearch', 'gearTableBody');
+            setupSearch('eggSearch', 'eggTableBody');
+            setupSearch('honeySearch', 'honeyTableBody');
+            setupSearch('cosmeticSearch', 'cosmeticTableBody');
+            
+            // Start auto-refresh
             startAutoRefresh();
         });
     </script>
