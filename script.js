@@ -28,6 +28,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Horizontal sticky navbar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
+    let lastScrollX = window.pageXOffset;
+    let lastScrollY = window.pageYOffset;
+    
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            const currentScrollX = window.pageXOffset;
+            const currentScrollY = window.pageYOffset;
+            
+            // Check if there's horizontal scrolling
+            const isHorizontalScroll = Math.abs(currentScrollX - lastScrollX) > Math.abs(currentScrollY - lastScrollY);
+            
+            if (isHorizontalScroll && Math.abs(currentScrollX - lastScrollX) > 5) {
+                // Horizontal scrolling detected - make navbar sticky
+                navbar.classList.add('horizontal-sticky');
+            } else if (Math.abs(currentScrollY - lastScrollY) > 5) {
+                // Vertical scrolling detected - remove sticky
+                navbar.classList.remove('horizontal-sticky');
+            }
+            
+            lastScrollX = currentScrollX;
+            lastScrollY = currentScrollY;
+        });
+    }
+});
+
 // Search functionality for values page
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('fruitSearch');
