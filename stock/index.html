@@ -77,6 +77,15 @@
             <h2>Live Stock Updates</h2>
             <p>Real-time stock information for all shops in Grow A Garden. Data updates automatically every 30 seconds.</p>
             
+            <!-- API Status Notice -->
+            <div class="api-status-notice" style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 1rem; margin-bottom: 2rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #155724;">✅ API Status: Working</h4>
+                <p style="margin: 0; color: #155724; font-size: 0.9rem;">
+                    Using the HangPrivate Grow A Garden Stock API. Data updates automatically every 30 seconds.
+                    <a href="https://github.com/HangPrivate/GrowGardenStock" target="_blank" style="color: #0056b3;">View API Source</a>
+                </p>
+            </div>
+            
             <!-- Seeds Section -->
             <h3 class="green-subheading">Seed Shop</h3>
             <div class="mutations-table-wrapper">
@@ -128,23 +137,6 @@
                 </table>
             </div>
 
-            <!-- Honey Items Section -->
-            <h3 class="green-subheading">Honey Shop</h3>
-            <div class="mutations-table-wrapper">
-                <table class="mutations-table">
-                    <thead>
-                        <tr>
-                            <th>Honey Item</th>
-                            <th>Stock Quantity</th>
-                            <th>Last Updated</th>
-                        </tr>
-                    </thead>
-                    <tbody id="honeyTableBody">
-                        <tr><td colspan="3" style="text-align: center; padding: 2rem;">Loading honey data...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
             <!-- Cosmetics Section -->
             <h3 class="green-subheading">Cosmetics Shop</h3>
             <div class="mutations-table-wrapper">
@@ -179,7 +171,7 @@
                         </tr>
                     </thead>
                     <tbody id="weatherTableBody">
-                        <tr><td colspan="5" style="text-align: center; padding: 2rem;">Loading weather data...</td></tr>
+                        <tr><td colspan="5" style="text-align: center; padding: 2rem;">Weather data not available from this API</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -203,21 +195,22 @@
     <script>
         // Real-time stock data fetching
         async function fetchStockData() {
+            console.log('Attempting to fetch stock data...');
+            
+            // Fetch stock data from new API
             try {
-                // Fetch stock data
-                const stockResponse = await fetch('https://growagardenapi.vercel.app/api/stock/GetStock');
+                const stockResponse = await fetch('https://api.hanggts.xyz/tools/stockgag');
+                if (!stockResponse.ok) {
+                    throw new Error(`HTTP error! status: ${stockResponse.status}`);
+                }
                 const stockData = await stockResponse.json();
                 
-                // Fetch weather data
-                const weatherResponse = await fetch('https://growagardenapi.vercel.app/api/GetWeather');
-                const weatherData = await weatherResponse.json();
-                
                 // Process and display stock data
-                if (stockData && stockData.Data) {
-                    const data = stockData.Data;
+                if (stockData && stockData.status && stockData.result) {
+                    const data = stockData.result;
                     
                     // Populate Seeds Section
-                    populateSection('seedTableBody', data.seeds, 'Seed');
+                    populateSection('seedTableBody', data.seed, 'Seed');
                     
                     // Populate Gear Section
                     populateSection('gearTableBody', data.gear, 'Gear');
@@ -225,45 +218,34 @@
                     // Populate Eggs Section
                     populateSection('eggTableBody', data.egg, 'Egg');
                     
-                    // Populate Honey Items Section
-                    populateSection('honeyTableBody', data.honey, 'Honey Item');
-                    
                     // Populate Cosmetics Section
                     populateSection('cosmeticTableBody', data.cosmetics, 'Cosmetic');
                     
                     // Add last updated timestamp
-                    if (data.updatedAt) {
-                        const updateTime = new Date(data.updatedAt).toLocaleString();
-                        const updateInfo = document.createElement('div');
-                        updateInfo.style.cssText = 'text-align: center; margin-top: 2rem; color: #666; font-size: 0.9rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;';
-                        updateInfo.textContent = `Last API Update: ${updateTime}`;
-                        
-                        // Remove existing update info if present
-                        const existingUpdate = document.querySelector('.update-info');
-                        if (existingUpdate) {
-                            existingUpdate.remove();
-                        }
-                        
-                        updateInfo.className = 'update-info';
-                        document.querySelector('.doc-main').appendChild(updateInfo);
+                    const updateTime = new Date().toLocaleString();
+                    const updateInfo = document.createElement('div');
+                    updateInfo.style.cssText = 'text-align: center; margin-top: 2rem; color: #666; font-size: 0.9rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;';
+                    updateInfo.textContent = `Last API Update: ${updateTime} | API: HangPrivate`;
+                    
+                    // Remove existing update info if present
+                    const existingUpdate = document.querySelector('.update-info');
+                    if (existingUpdate) {
+                        existingUpdate.remove();
                     }
+                    
+                    updateInfo.className = 'update-info';
+                    document.querySelector('.doc-main').appendChild(updateInfo);
                 } else {
                     // Handle case where data is not in expected format
-                    showError('No stock data available');
+                    showError('No stock data available or in unexpected format');
                 }
-                
-                // Process and display weather data
-                if (weatherData && weatherData.success && weatherData.weather) {
-                    populateWeatherSection(weatherData.weather);
-                } else {
-                    showWeatherError('No weather data available');
-                }
-                
             } catch (error) {
-                console.error('Error fetching data:', error);
-                showError('Error loading data. Please try again later.');
-                showWeatherError('Error loading weather data. Please try again later.');
+                console.error('Error fetching stock data:', error);
+                showError('Error loading stock data. Please check console for details.');
             }
+
+            // Note: Weather data is not available from this API
+            showWeatherError('Weather data not available from this API');
         }
         
         // Function to populate weather section
@@ -335,10 +317,10 @@
             if (!tableBody) return;
             
             if (items && Array.isArray(items) && items.length > 0) {
-                // Filter out items with stock = 0
+                // Filter out items with quantity = 0 or empty
                 const availableItems = items.filter(item => {
-                    const stock = parseInt(item.stock) || 0;
-                    return stock > 0;
+                    const quantity = item.quantity || 'x0';
+                    return quantity !== 'x0' && quantity !== '';
                 });
                 
                 if (availableItems.length > 0) {
@@ -347,16 +329,16 @@
                     availableItems.forEach(item => {
                         const row = document.createElement('tr');
                         
-                        // Show just the stock number for all shops
-                        const stock = parseInt(item.stock) || 0;
-                        const stockDisplay = stock.toString();
+                        // Show quantity (format: "x1", "x2", etc.)
+                        const quantity = item.quantity || 'x0';
+                        const quantityDisplay = quantity.replace('x', ''); // Remove 'x' prefix for display
                         
                         // Format last updated time
                         const lastUpdated = new Date().toLocaleTimeString();
                         
                         row.innerHTML = `
                             <td><strong>${item.name || `Unknown ${itemType}`}</strong></td>
-                            <td class="in-stock">${stockDisplay}</td>
+                            <td class="in-stock">${quantityDisplay}</td>
                             <td>${lastUpdated}</td>
                         `;
                         
@@ -372,7 +354,7 @@
         
         // Function to show error message
         function showError(message) {
-            const sections = ['seedTableBody', 'gearTableBody', 'eggTableBody', 'honeyTableBody', 'cosmeticTableBody'];
+            const sections = ['seedTableBody', 'gearTableBody', 'eggTableBody', 'cosmeticTableBody'];
             sections.forEach(sectionId => {
                 const tableBody = document.getElementById(sectionId);
                 if (tableBody) {
