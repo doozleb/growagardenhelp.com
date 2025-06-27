@@ -28,30 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Horizontal sticky navbar functionality
+// Sticky navbar functionality
 document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
-    let lastScrollX = window.pageXOffset;
-    let lastScrollY = window.pageYOffset;
+    const body = document.body;
     
     if (navbar) {
         window.addEventListener('scroll', function() {
-            const currentScrollX = window.pageXOffset;
-            const currentScrollY = window.pageYOffset;
-            
-            // Check if there's horizontal scrolling
-            const isHorizontalScroll = Math.abs(currentScrollX - lastScrollX) > Math.abs(currentScrollY - lastScrollY);
-            
-            if (isHorizontalScroll && Math.abs(currentScrollX - lastScrollX) > 5) {
-                // Horizontal scrolling detected - make navbar sticky
+            if (window.scrollY > 0) {
+                // Add sticky class when scrolled down
                 navbar.classList.add('horizontal-sticky');
-            } else if (Math.abs(currentScrollY - lastScrollY) > 5) {
-                // Vertical scrolling detected - remove sticky
+                body.classList.add('navbar-sticky');
+            } else {
+                // Remove sticky class when at top
                 navbar.classList.remove('horizontal-sticky');
+                body.classList.remove('navbar-sticky');
             }
-            
-            lastScrollX = currentScrollX;
-            lastScrollY = currentScrollY;
         });
     }
 });

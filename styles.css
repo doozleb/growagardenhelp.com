@@ -29,6 +29,11 @@ body {
     left: 0;
 }
 
+/* Add padding to body when navbar is sticky */
+body.navbar-sticky {
+    padding-top: 56px;
+}
+
 .nav-content {
     max-width: 1200px;
     margin: 0 auto;
