@@ -11,6 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: 56px;
 }
 
 /* Navbar Styles */
@@ -20,18 +21,9 @@ body {
     width: 100%;
     z-index: 1000;
     height: 56px;
-    transition: position 0.3s ease;
-}
-
-.navbar.horizontal-sticky {
     position: fixed;
     top: 0;
     left: 0;
-}
-
-/* Add padding to body when navbar is sticky */
-body.navbar-sticky {
-    padding-top: 56px;
 }
 
 .nav-content {

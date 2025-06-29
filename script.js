@@ -28,26 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Sticky navbar functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const navbar = document.querySelector('.navbar');
-    const body = document.body;
-    
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 0) {
-                // Add sticky class when scrolled down
-                navbar.classList.add('horizontal-sticky');
-                body.classList.add('navbar-sticky');
-            } else {
-                // Remove sticky class when at top
-                navbar.classList.remove('horizontal-sticky');
-                body.classList.remove('navbar-sticky');
-            }
-        });
-    }
-});
-
 // Search functionality for values page
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('fruitSearch');
