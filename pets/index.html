@@ -134,6 +134,8 @@
         </section>
         <section class="doc-section content-box animate-slide-up">
             <h2>Pet List</h2>
+            <label for="petSearch" class="search-label">Search Pets:</label>
+            <input type="text" id="petSearch" class="search-bar" placeholder="Type to search pets or abilities..." autocomplete="off">
             <div class="mutations-table-wrapper">
                 <table class="mutations-table">
                     <thead>
@@ -213,6 +215,7 @@
                         <tr><td>Axolotl</td><td>6.66% chance of summer plants remaining after collection.</td></tr>
                         <tr><td>Hyacinth Macaw</td><td>Every 8.26 minutes, has a 16.78% chance of applying Wiltproof mutation to fruits.</td></tr>
                         <tr><td>Fennec Fox</td><td>Every 22.03 minutes, copies random mutation from other player's fruit and applies to one of your fruits which lacks that mutation.</td></tr>
+                        <tr id="noResultsRowPets" style="display:none;"><td colspan="2" style="text-align:center;">No results found.</td></tr>
                     </tbody>
                 </table>
             </div>
