@@ -546,4 +546,10 @@ footer {
 .out-of-stock {
     color: #e74c3c;
     font-weight: 600;
+}
+
+/* Neon green bold text for strategies page and site-wide */
+strong, b {
+    color: #2ecc71;
+    font-weight: bold;
 } 
