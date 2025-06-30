@@ -364,6 +364,11 @@ footer {
     margin-bottom: 2rem;
 }
 
+.doc-section h3 {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-content {
